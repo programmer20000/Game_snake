@@ -37,14 +37,9 @@ class Player(pygame.sprite.Sprite):
         self.rect.x += x_direction
         self.rect.y += y_direction
 
-    def reset_pos(self):
-        self.rect.x = random.randrange(-300, -100)
-        self.rect.y = random.randrange(0, WIDTH_WINDOW)
-
     def update(self):
         self.rect.x += 1
-        if self.rect.x > 500:
-            self.reset_pos()
+
 
 
 class Food(pygame.sprite.Sprite):
