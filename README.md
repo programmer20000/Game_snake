@@ -1,4 +1,5 @@
 # Game_snake
+
 # how to run project on Windows
 
 ```commandline
