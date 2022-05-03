@@ -3,14 +3,14 @@ import random
 
 pygame.init()
 
-WIDTH_WINDOW = 600
-HEIGHT_WINDOW = 600
+WIDTH_WINDOW = (600)
+HEIGHT_WINDOW = (600)
 TITLE_WINDOW = "GAME SNAKE"
 BACKGROUND_COLOR_WINDOW = (0, 0, 0)
 SNAKE_COLOR = (0, 255, 89)
 APPLE_COLOR = (255, 40, 47)
 SCORE_COLOR = (255, 255, 255)
-head_size = 50
+head_size = 30
 font = pygame.font.SysFont("Arial", 50)
 position_head_x = 0
 position_head_y = 0
@@ -18,6 +18,7 @@ length = 1
 snake = [(position_head_x,position_head_y)]
 score = 0
 FPS = 60
+background_image = pygame.image.load("background_image/background_image.png")
 
 screen = pygame.display.set_mode([WIDTH_WINDOW, HEIGHT_WINDOW])
 pygame.display.set_caption(TITLE_WINDOW)
@@ -64,9 +65,10 @@ all_sprites_group.add(player)
 
 
 def snake_tails():
-    [pygame.draw.rect(screen,SNAKE_COLOR,(i,j,head_size,head_size)) for i,j in snake]
     snake.append((position_head_x,position_head_y))
+    [pygame.draw.rect(screen, SNAKE_COLOR, (i, j, head_size, head_size)) for i, j in snake]
     pygame.display.flip()
+
 
 Close_Window = False
 clock = pygame.time.Clock()
@@ -76,12 +78,15 @@ while not Close_Window:
         if event.type == pygame.QUIT:
             Close_Window = True
 
-    if position_head_x > WIDTH_WINDOW:
+    if player.rect.x > WIDTH_WINDOW:
         Close_Window = True
 
+
     screen.fill(BACKGROUND_COLOR_WINDOW)
+    screen.blit(background_image,[0,0])
     all_sprites_group.draw(screen)
     all_sprites_group.update()
+
     key_pressed = pygame.key.get_pressed()
 
     if key_pressed[pygame.K_UP]:
@@ -106,12 +111,14 @@ while not Close_Window:
         player.movement_player(1, 0)
     if key_pressed[pygame.K_d]:
         player.movement_player(-1, 0)
+    if key_pressed[pygame.K_ESCAPE]:
+        Close_Window = True
 
     sprites_collision = pygame.sprite.spritecollide(player, sprites_group, False)
     if food in sprites_collision:
+        length += 1
         snake_tails()
         score += 1
-        length +=1
         food.random_position()
 
     show_score = font.render("Score:" + str(score), True, SCORE_COLOR)
