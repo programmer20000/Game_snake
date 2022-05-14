@@ -89,7 +89,7 @@ while not Close_Window:
         if event.type == pygame.QUIT:
             Close_Window = True
 
-    if player.rect.x > WIDTH_WINDOW:
+    if player.rect.x > WIDTH_WINDOW or player.rect.y > HEIGHT_WINDOW:
         pygame.mixer.music.load("music/music_by_game_over.mp3")
         pygame.mixer.music.play(0)
         sleep(1)
